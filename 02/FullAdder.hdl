@@ -13,5 +13,6 @@ CHIP FullAdder {
         carry;   // Left bit of a + b + c
 
     PARTS:
-    // Put you code here:
+    Mux(a=a,b=b,c=c,carry=out);
+    Dmux(a=a,b=b,c=c,sum=out);
 }
