@@ -38,7 +38,19 @@ M=0
 M=M-1
 @LOOP
 0;JMP
+
 (BLACK)
+@place
+D=M
+D=D-A
+@LOOP
+D;JGE
+@place
+D=M
+@SCREEN
+A=A+D
+M=-1
+@place
 
 
 
