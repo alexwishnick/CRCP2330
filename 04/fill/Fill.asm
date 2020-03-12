@@ -51,12 +51,9 @@ D=M
 A=A+D
 M=-1
 @place
-
-
-
-
-
-
+M=M+1
+@LOOP
+0;JMP
 
 (END)
 @END
