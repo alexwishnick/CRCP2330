@@ -13,11 +13,11 @@
 
 // Put your code here.
 
-@place //start
+@start //start
 M=0
 
 (LOOP)
-
+@KBD
 D=M
 @WHITE
 D;JEQ
@@ -25,7 +25,7 @@ D;JEQ
 0;JMP
 
 (WHITE)
-@place
+@start
 D=M
 @LOOP
 D;JLT
@@ -34,14 +34,15 @@ D=M
 @SCREEN
 A=A+D
 M=0
-@place
+@start
 M=M-1
 @LOOP
 0;JMP
 
 (BLACK)
-@place
+@start
 D=M
+@8192
 D=D-A
 @LOOP
 D;JGE
@@ -50,7 +51,7 @@ D=M
 @SCREEN
 A=A+D
 M=-1
-@place
+@start
 M=M+1
 @LOOP
 0;JMP
