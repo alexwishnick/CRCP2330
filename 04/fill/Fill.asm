@@ -13,49 +13,43 @@
 
 // Put your code here.
 
-@start //start
-M=0
+@8192
+D=A
+@start
+M=D
 
 (LOOP)
+@place
+M=0
+
+(KBDCHECK)
 @KBD
 D=M
 @WHITE
 D;JEQ
-@BLACK
-0;JMP
-
-(WHITE)
-@start
-D=M
-@LOOP
-D;JLT
-@place
-D=M
-@SCREEN
-A=A+D
-M=0
-@start
-M=M-1
-@LOOP
-0;JMP
 
 (BLACK)
-@start
-D=M
-@8192
-D=D-A
-@LOOP
-D;JGE
 @place
 D=M
 @SCREEN
 A=A+D
 M=-1
-@start
-M=M+1
-@LOOP
+@END
 0;JMP
 
+(WHITE)
+@place
+D=M
+@SCREEN
+A=A+D
+M=0
+
 (END)
-@END
+@place
+MD=M+1
+@start
+D=D-M
+@LOOP
+D;JEQ
+@KBDCHECK
 0;JMP
