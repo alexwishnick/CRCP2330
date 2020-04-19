@@ -27,5 +27,5 @@ CHIP Memory {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    DMux4Way(in=load, sel=address[13..14], a=loadr1, b= loadr2, c=loads, d=loadkbd);
 }
