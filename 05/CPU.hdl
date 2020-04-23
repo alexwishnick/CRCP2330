@@ -46,5 +46,10 @@ CHIP CPU {
     And(a=Cinstruction, b=instruction[5], out=outa);
     Mux16(a=instr, b=aluout, sel=instruction[15],out=nexta);
     Or(a=Ainstruction, b=outa, out=loada);
-    ARegister(in=nexta, load=loada, out=a);
+    ARegister(in=nexta, load=loada, out=aout);
+
+    //D
+    And(a=instruction[4],b=Cinstruction,out=loadd);
+    DRegister(in=alu,load=loadd,out=d);
+
 }
