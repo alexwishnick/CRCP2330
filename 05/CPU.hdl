@@ -52,4 +52,8 @@ CHIP CPU {
     And(a=instruction[4],b=Cinstruction,out=loadd);
     DRegister(in=alu,load=loadd,out=d);
 
+    Mux16(a=a, b=b, sel=instruction[12], out=mout);
+    And(a=instruction[11..6], b=true, out=aluout);
+    ALU(x=d,y=mout,aluout=aluout,out=alu);
+
 }
