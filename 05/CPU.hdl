@@ -54,6 +54,22 @@ CHIP CPU {
 
     Mux16(a=a, b=b, sel=instruction[12], out=mout);
     And(a=instruction[11..6], b=true, out=aluout);
-    ALU(x=d,y=mout,aluout=aluout,out=alu);
+    ALU(x=d,y=mout,aluout=aluout,out=alu,ar=ar,ag=ag);
+
+    Not(in=ar,out=nar);
+    Not(in=ag, out=nag);
+    And(a=nar, b=nag, out=pos);
+    And(a=instruction[2],b=ag, out=aj);
+    And(a=instruction[1], b=ar, out=az);
+    And(a=instruction[0], b=pos,out=jpos);
+    Or(a=aj,b=az,out=ajz);
+    Or(a=ajz,b=jpos,out=jumpcond);
+    And(a=Cinstruction,b=jumpcond,out=sjump);
+
+    And(a=Cinstruction, b=instruction[3], out=writeM);
+    And16(a=a,b=true, out[0..14]=addressM);
+    And16(a=alu,b=true,out=outM);
+    PC(in=a,load=sjump,inc=true,reset=reset,out[0..14]=pc);
+
 
 }
