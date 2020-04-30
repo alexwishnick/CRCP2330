@@ -44,26 +44,31 @@ CHIP CPU {
 
     //A
     And(a=Cinstruction, b=instruction[5], out=outa);
-    Mux16(a=instr, b=aluout, sel=instruction[15],out=nexta);
+    Mux16(a=instruction, b=alu, sel=instruction[15],out=nexta);
     Or(a=Ainstruction, b=outa, out=loada);
-    ARegister(in=nexta, load=loada, out=aout);
+    ARegister(in=nexta, load=loada, out=a);
 
     //D
     And(a=instruction[4],b=Cinstruction,out=loadd);
     DRegister(in=alu,load=loadd,out=d);
 
-    Mux16(a=a, b=b, sel=instruction[12], out=mout);
-    And(a=instruction[11..6], b=true, out=aluout);
-    ALU(x=d,y=mout,aluout=aluout,out=alu,ar=ar,ag=ag);
+    Mux16(a=a, b=inM, sel=instruction[12], out=mout);
+    And(a=instruction[11], b=true, out=zx);
+     And(a=instruction[10], b=true, out=nx);
+      And(a=instruction[9], b=true, out=zy);
+       And(a=instruction[8], b=true, out=ny);
+        And(a=instruction[7], b=true, out=f);
+         And(a=instruction[6], b=true, out=no);
+    ALU(x=d,y=mout,zx=zx,nx=nx,zy=zy,ny=ny,f=f,no=no,out=alu,zr=zr,ng=ng);
 
-    Not(in=ar,out=nar);
-    Not(in=ag, out=nag);
-    And(a=nar, b=nag, out=pos);
-    And(a=instruction[2],b=ag, out=aj);
-    And(a=instruction[1], b=ar, out=az);
+    Not(in=zr,out=nzr);
+    Not(in=ng, out=nng);
+    And(a=nzr, b=nng, out=pos);
+    And(a=instruction[2],b=ng, out=jlt);
+    And(a=instruction[1], b=zr, out=jz);
     And(a=instruction[0], b=pos,out=jpos);
-    Or(a=aj,b=az,out=ajz);
-    Or(a=ajz,b=jpos,out=jumpcond);
+    Or(a=jlt,b=jz,out=jltz);
+    Or(a=jltz,b=jpos,out=jumpcond);
     And(a=Cinstruction,b=jumpcond,out=sjump);
 
     And(a=Cinstruction, b=instruction[3], out=writeM);
